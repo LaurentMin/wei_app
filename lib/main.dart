@@ -7,15 +7,7 @@ void main() {
   runApp(const MyApp());
 }
 
-// Classe pour les requetes http
-Future<List<dynamic>> fetchItems() async {
-  final response = await http.get(Uri.parse('https://api.skeuly.com/items'));
-  if (response.statusCode == 200) {
-    return jsonDecode(response.body);
-  } else {
-    throw Exception('Erreur lors de la récupération des données');
-  }
-}
+const urlApi = 'https://api.skeuly.com/items';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -68,6 +60,40 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<dynamic> items = []; // Liste des éléments récupérés
+  bool isLoading = true; // Indicateur de chargement
+
+  @override
+  void initState() {
+    super.initState();
+    fetchItems(); // Récupère les données dès l'ouverture de la page
+  }
+
+  Future<void> fetchItems() async {
+    print("fetchItems() called"); // Log pour vérifier l'appel
+    final url = Uri.parse(urlApi); // URL de l'API
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        setState(() {
+          items = data;
+          isLoading = false;
+        });
+      } else {
+        print('Erreur : ${response.statusCode}');
+        setState(() {
+          isLoading = false; // Arrêter le loader même en cas d'erreur
+        });
+      }
+    } catch (e) {
+      print('Erreur lors de la connexion : $e');
+      setState(() {
+        isLoading = false; // Arrêter le loader même en cas d'erreur
+      });
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,9 +111,37 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: const Center(
-        child: Text('Bienvenue sur la page d\'accueil !'),
-      ),
+      body: isLoading
+          ? Center(child: CircularProgressIndicator()) // Affiche un loader pendant le chargement
+          // Continuer la recherche
+          : items.isEmpty
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Aucun élément trouvé ou erreur lors du chargement'),
+                    SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: fetchItems, // Relance la récupération
+                      child: Text('Recharger'),
+                    ),
+                  ],
+                ),
+              )
+            : ListView.builder(
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                final item = items[index];
+                return ListTile(
+                  title: Text(item['name']), // Affiche le champ 'name'
+                  subtitle: Text('ID : ${item['id']}'), // Affiche l'ID
+                  trailing: const Icon(Icons.arrow_forward),
+                  onTap: () {
+                    print('Item sélectionné : ${item['id']}');
+                  },
+                );
+              },
+            ),
     );
   }
 }
