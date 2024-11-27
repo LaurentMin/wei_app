@@ -60,17 +60,60 @@ class MyHomePage extends StatefulWidget {
 }
 
 class PageScan extends StatelessWidget {
-  @override
+@override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Nouvelle Page'),
-      ),
-      body: Center(
-        child: Text(
-          'Bienvenue sur la nouvelle page!',
-          style: TextStyle(fontSize: 24),
-        ),
+      floatingActionButton: Stack(
+        children: [
+          Positioned(
+            right: 20,
+            bottom: 10,
+            child: SizedBox(
+              width: 70,
+              height: 70,
+              child: FloatingActionButton(
+                  onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PageUtilisateur())
+                  );
+                  },
+                child: Icon(Icons.account_circle),
+              ),
+            ),
+          ),
+          Positioned(
+            right: 160,
+            bottom: 10,
+            child: SizedBox(
+              width: 70,
+              height: 70,
+              child: FloatingActionButton(
+                  onPressed: () {
+                  print('Bouton 2 appuyé');
+                },
+              child: Icon(Icons.add_circle),
+              ),
+            ),
+          ),
+          Positioned(
+            right: 300,
+            bottom: 10,
+            child: SizedBox(
+              width: 70,
+              height: 70,
+              child: FloatingActionButton(
+                  onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyHomePage(title: 'Articles'))
+                  );
+                },
+              child: Icon(Icons.folder),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -80,14 +123,57 @@ class PageUtilisateur extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Nouvelle Page'),
-      ),
-      body: Center(
-        child: Text(
-          'Bienvenue sur la nouvelle page!',
-          style: TextStyle(fontSize: 24),
-        ),
+      floatingActionButton: Stack(
+        children: [
+          Positioned(
+            right: 20,
+            bottom: 10,
+            child: SizedBox(
+              width: 70,
+              height: 70,
+              child: FloatingActionButton(
+                  onPressed: () {
+                  print('Bouton 1 appuyé');
+                  },
+                child: Icon(Icons.account_circle),
+              ),
+            ),
+          ),
+          Positioned(
+            right: 160,
+            bottom: 10,
+            child: SizedBox(
+              width: 70,
+              height: 70,
+              child: FloatingActionButton(
+                  onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PageScan())
+                  );
+                },
+              child: Icon(Icons.add_circle),
+              ),
+            ),
+          ),
+          Positioned(
+            right: 300,
+            bottom: 10,
+            child: SizedBox(
+              width: 70,
+              height: 70,
+              child: FloatingActionButton(
+                  onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyHomePage(title: 'Articles'))
+                  );
+                },
+              child: Icon(Icons.folder),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
