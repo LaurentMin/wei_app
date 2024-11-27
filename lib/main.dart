@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'WEI Demo',
+      title: 'WEI APP',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Articles'),
+      home: const MyHomePage(title: 'ARTICLES'),
     );
   }
 }
@@ -78,7 +78,7 @@ class PageScan extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => PageUtilisateur())
                   );
                   },
-                child: Icon(Icons.account_circle),
+                child: const Icon(Icons.account_circle),
               ),
             ),
           ),
@@ -92,7 +92,7 @@ class PageScan extends StatelessWidget {
                   onPressed: () {
                   print('Bouton 2 appuyé');
                 },
-              child: Icon(Icons.add_circle),
+              child: const Icon(Icons.add_circle),
               ),
             ),
           ),
@@ -106,10 +106,10 @@ class PageScan extends StatelessWidget {
                   onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => MyHomePage(title: 'Articles'))
+                    MaterialPageRoute(builder: (context) => const MyHomePage(title: 'ARTICLES'))
                   );
                 },
-              child: Icon(Icons.folder),
+              child: const Icon(Icons.folder),
               ),
             ),
           ),
@@ -119,6 +119,8 @@ class PageScan extends StatelessWidget {
   }
 }
 
+
+// #region Page Utilisateur
 class PageUtilisateur extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -135,7 +137,7 @@ class PageUtilisateur extends StatelessWidget {
                   onPressed: () {
                   print('Bouton 1 appuyé');
                   },
-                child: Icon(Icons.account_circle),
+                child: const Icon(Icons.account_circle),
               ),
             ),
           ),
@@ -152,7 +154,7 @@ class PageUtilisateur extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => PageScan())
                   );
                 },
-              child: Icon(Icons.add_circle),
+              child: const Icon(Icons.add_circle),
               ),
             ),
           ),
@@ -166,10 +168,10 @@ class PageUtilisateur extends StatelessWidget {
                   onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => MyHomePage(title: 'Articles'))
+                    MaterialPageRoute(builder: (context) => const MyHomePage(title: 'ARTICLES'))
                   );
                 },
-              child: Icon(Icons.folder),
+              child: const Icon(Icons.folder),
               ),
             ),
           ),
@@ -178,7 +180,10 @@ class PageUtilisateur extends StatelessWidget {
     );
   }
 }
+// #endregion
 
+
+// #region Page articles (HomePage)
 class _MyHomePageState extends State<MyHomePage> {
   List<dynamic> items = []; // Liste des éléments récupérés
   bool isLoading = true; // Indicateur de chargement
@@ -232,18 +237,18 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: isLoading
-      ? Center(child: CircularProgressIndicator()) // Affiche un loader pendant le chargement
+      ? const Center(child: CircularProgressIndicator()) // Affiche un loader pendant le chargement
       // Continuer la recherche
       : items.isEmpty
       ? Center(
          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
              children: [
-              Text('Aucun élément trouvé ou erreur lors du chargement'),
-              SizedBox(height: 10),
+              const Text('Aucun élément trouvé ou erreur lors du chargement'),
+              const SizedBox(height: 10),
               ElevatedButton(
                onPressed: fetchItems, // Relance la récupération
-               child: Text('Recharger'),
+               child: const Text('Recharger'),
                ),
             ],
           ),
@@ -260,7 +265,7 @@ class _MyHomePageState extends State<MyHomePage> {
                print('Item sélectionné : ${item['id']}');
                Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => PageProduit(idProduit: item['id']))
+                  MaterialPageRoute(builder: (context) => PageProduit(idProduit: item['id'], nameProduit: item['name'])) // Redirection vers la page du prodit en question
                 );
               },
             );
@@ -281,7 +286,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     MaterialPageRoute(builder: (context) => PageUtilisateur())
                   );
                 },
-              child: Icon(Icons.account_circle),
+              child: const Icon(Icons.account_circle),
               ),
             ),
           ),
@@ -298,7 +303,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     MaterialPageRoute(builder: (context) => PageScan())
                   );
                 },
-              child: Icon(Icons.add_circle),
+              child: const Icon(Icons.add_circle),
               ),
             ),
           ),
@@ -312,7 +317,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {
                   print('Bouton 3 appuyé');
                 },
-              child: Icon(Icons.folder),
+              child: const Icon(Icons.folder),
               ),
             ),
           ),
@@ -321,18 +326,28 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+// #endregion
 
 
-
-
+// # region Page Produit
 // Page d'un produit
 class PageProduit extends StatelessWidget {
+  final int idProduit;
+  final String nameProduit;
+
   @override
-  const PageProduit({super.key, required int idProduit});
+  const PageProduit({super.key, required this.idProduit, required this.nameProduit});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar( // Titre page
+        title: const Text('ARTICLE(S) DEMANDE(S)'),
+      ),
+
+      // Information produit
+      // TODO body
+
       floatingActionButton: Stack(
         children: [
           Positioned(
@@ -345,7 +360,7 @@ class PageProduit extends StatelessWidget {
                   onPressed: () {
                   print('Bouton 1 appuyé');
                   },
-                child: Icon(Icons.account_circle),
+                child: const Icon(Icons.account_circle),
               ),
             ),
           ),
@@ -362,7 +377,7 @@ class PageProduit extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => PageScan())
                   );
                 },
-              child: Icon(Icons.add_circle),
+              child: const Icon(Icons.add_circle),
               ),
             ),
           ),
@@ -376,10 +391,10 @@ class PageProduit extends StatelessWidget {
                   onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => MyHomePage(title: 'Articles'))
+                    MaterialPageRoute(builder: (context) => const MyHomePage(title: 'ARTICLE'))
                   );
                 },
-              child: Icon(Icons.folder),
+              child: const Icon(Icons.folder),
               ),
             ),
           ),
@@ -388,6 +403,7 @@ class PageProduit extends StatelessWidget {
     );
   }
 }
+// #endregion
 
 
 class CustomSearchDelegate extends SearchDelegate {
