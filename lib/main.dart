@@ -59,6 +59,40 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+class PageScan extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Nouvelle Page'),
+      ),
+      body: Center(
+        child: Text(
+          'Bienvenue sur la nouvelle page!',
+          style: TextStyle(fontSize: 24),
+        ),
+      ),
+    );
+  }
+}
+
+class PageUtilisateur extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Nouvelle Page'),
+      ),
+      body: Center(
+        child: Text(
+          'Bienvenue sur la nouvelle page!',
+          style: TextStyle(fontSize: 24),
+        ),
+      ),
+    );
+  }
+}
+
 class _MyHomePageState extends State<MyHomePage> {
   List<dynamic> items = []; // Liste des éléments récupérés
   bool isLoading = true; // Indicateur de chargement
@@ -112,39 +146,92 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: isLoading
-          ? Center(child: CircularProgressIndicator()) // Affiche un loader pendant le chargement
-          // Continuer la recherche
-          : items.isEmpty
-            ? Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Aucun élément trouvé ou erreur lors du chargement'),
-                    SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: fetchItems, // Relance la récupération
-                      child: Text('Recharger'),
-                    ),
-                  ],
-                ),
-              )
-            : ListView.builder(
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                final item = items[index];
-                return ListTile(
-                  title: Text(item['name']), // Affiche le champ 'name'
-                  subtitle: Text('ID : ${item['id']}'), // Affiche l'ID
-                  trailing: const Icon(Icons.arrow_forward),
-                  onTap: () {
-                    print('Item sélectionné : ${item['id']}');
-                  },
-                );
+      ? Center(child: CircularProgressIndicator()) // Affiche un loader pendant le chargement
+      // Continuer la recherche
+      : items.isEmpty
+      ? Center(
+         child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+             children: [
+              Text('Aucun élément trouvé ou erreur lors du chargement'),
+              SizedBox(height: 10),
+              ElevatedButton(
+               onPressed: fetchItems, // Relance la récupération
+               child: Text('Recharger'),
+               ),
+            ],
+          ),
+        )
+        : ListView.builder(
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+           final item = items[index];
+           return ListTile(
+             title: Text(item['name']), // Affiche le champ 'name'
+             subtitle: Text('ID : ${item['id']}'), // Affiche l'ID
+             trailing: const Icon(Icons.arrow_forward),
+             onTap: () {
+               print('Item sélectionné : ${item['id']}');
               },
+            );
+          },
+        ),
+      floatingActionButton: Stack(
+        children: [
+          Positioned(
+            right: 20,
+            bottom: 10,
+            child: SizedBox(
+              width: 70,
+              height: 70,
+              child: FloatingActionButton(
+                  onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PageUtilisateur())
+                  );
+                },
+              child: Icon(Icons.account_circle),
+              ),
             ),
+          ),
+          Positioned(
+            right: 160,
+            bottom: 10,
+            child: SizedBox(
+              width: 70,
+              height: 70,
+              child: FloatingActionButton(
+                  onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PageScan())
+                  );
+                },
+              child: Icon(Icons.add_circle),
+              ),
+            ),
+          ),
+          Positioned(
+            right: 300,
+            bottom: 10,
+            child: SizedBox(
+              width: 70,
+              height: 70,
+              child: FloatingActionButton(
+                  onPressed: () {
+                  print('Bouton 3 appuyé');
+                },
+              child: Icon(Icons.folder),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
+
 
 class CustomSearchDelegate extends SearchDelegate {
   @override
