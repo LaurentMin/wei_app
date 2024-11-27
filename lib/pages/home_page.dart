@@ -6,8 +6,8 @@ import 'user_page.dart';
 import 'scan_page.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+  const MyHomePage({super.key});
+  final String title = 'ARTICLES';
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
