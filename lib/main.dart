@@ -248,7 +248,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         )
-        : ListView.builder(
+        : ListView.builder(  // Liste tous les produits
         itemCount: items.length,
         itemBuilder: (context, index) {
            final item = items[index];
@@ -258,13 +258,17 @@ class _MyHomePageState extends State<MyHomePage> {
              trailing: const Icon(Icons.arrow_forward),
              onTap: () {
                print('Item sélectionné : ${item['id']}');
+               Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PageProduit(idProduit: item['id']))
+                );
               },
             );
           },
         ),
-      floatingActionButton: Stack(
+      floatingActionButton: Stack( // 3 boutons du bas
         children: [
-          Positioned(
+          Positioned( // Vers PageUtilisateur
             right: 20,
             bottom: 10,
             child: SizedBox(
@@ -278,6 +282,70 @@ class _MyHomePageState extends State<MyHomePage> {
                   );
                 },
               child: Icon(Icons.account_circle),
+              ),
+            ),
+          ),
+          Positioned( // Vers PageScan
+            right: 160,
+            bottom: 10,
+            child: SizedBox(
+              width: 70,
+              height: 70,
+              child: FloatingActionButton(
+                  onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PageScan())
+                  );
+                },
+              child: Icon(Icons.add_circle),
+              ),
+            ),
+          ),
+          Positioned(
+            right: 300,
+            bottom: 10,
+            child: SizedBox(
+              width: 70,
+              height: 70,
+              child: FloatingActionButton(
+                  onPressed: () {
+                  print('Bouton 3 appuyé');
+                },
+              child: Icon(Icons.folder),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+
+// Page d'un produit
+class PageProduit extends StatelessWidget {
+  @override
+  const PageProduit({super.key, required int idProduit});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: Stack(
+        children: [
+          Positioned(
+            right: 20,
+            bottom: 10,
+            child: SizedBox(
+              width: 70,
+              height: 70,
+              child: FloatingActionButton(
+                  onPressed: () {
+                  print('Bouton 1 appuyé');
+                  },
+                child: Icon(Icons.account_circle),
               ),
             ),
           ),
@@ -306,7 +374,10 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 70,
               child: FloatingActionButton(
                   onPressed: () {
-                  print('Bouton 3 appuyé');
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyHomePage(title: 'Articles'))
+                  );
                 },
               child: Icon(Icons.folder),
               ),
