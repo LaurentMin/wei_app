@@ -33,7 +33,7 @@ class PageProduit extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.grey[300], // Placeholder background
               image: const DecorationImage(
-                image: AssetImage('assets/product_placeholder.png'), // Remplace par ton image
+                image: AssetImage('images/pantalon_gris.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
