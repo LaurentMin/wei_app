@@ -24,7 +24,7 @@ class FloatingButtons extends StatelessWidget {
           ),
         ),
         Positioned( // Scan Button
-          right: 90,
+          right: 160,
           bottom: 10,
           child: FloatingActionButton(
             onPressed: () {
@@ -37,7 +37,7 @@ class FloatingButtons extends StatelessWidget {
           ),
         ),
         Positioned( // Home Button
-          right: 160,
+          right: 300,
           bottom: 10,
           child: FloatingActionButton(
             onPressed: () {

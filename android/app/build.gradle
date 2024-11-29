@@ -9,6 +9,7 @@ android {
     namespace = "com.example.wei_app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
+   
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -37,6 +38,8 @@ android {
             signingConfig = signingConfigs.debug
         }
     }
+
+    
 }
 
 flutter {
