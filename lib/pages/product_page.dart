@@ -23,8 +23,74 @@ class PageProduit extends StatelessWidget {
       appBar: AppBar(
         title: Text(nameProduit),
       ),
-      body: Center(
-        child: Text('Détails du produit $nameProduit (ID : $idProduit)\n$size * $color * $ref'),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Image du produit
+          Container(
+            width: double.infinity,
+            height: 200,
+            decoration: BoxDecoration(
+              color: Colors.grey[300], // Placeholder background
+              image: const DecorationImage(
+                image: AssetImage('assets/product_placeholder.png'), // Remplace par ton image
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          
+          // Informations sur le produit
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Référence : $ref',
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  'Taille : $size',
+                  style: const TextStyle(fontSize: 14),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  'Couleur : $color',
+                  style: const TextStyle(fontSize: 14),
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
+          ),
+
+          // Boutons "Trouver" et "Déposer/Déplacer"
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () {
+                    print('Trouver appuyé');
+                    // Implémente la logique ici
+                  },
+                  icon: const Icon(Icons.search),
+                  label: const Text('Trouver'),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    print('Déposer/Déplacer appuyé');
+                    // Implémente la logique ici
+                  },
+                  icon: const Icon(Icons.move_to_inbox),
+                  label: const Text('Déposer/Déplacer'),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
       floatingActionButton: const FloatingButtons(),
     );
