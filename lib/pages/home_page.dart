@@ -6,8 +6,8 @@ import 'user_page.dart';
 import 'scan_page.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+  const MyHomePage({super.key});
+  final String title = 'ARTICLES';
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 final item = items[index];
                 return ListTile(
                   title: Text(item['name']),
-                  subtitle: Text('ID : ${item['id']}'),
+                  subtitle: Text('ID : ${item['id']}\nREF : ${item['ref']}\nSize : ${item['size']}\nColor : ${item['color']}'),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -53,6 +53,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         builder: (context) => PageProduit(
                           idProduit: item['id'],
                           nameProduit: item['name'],
+                          ref: item['ref'],
+                          size: item['size'],
+                          color: item['color'],
                         ),
                       ),
                     );
