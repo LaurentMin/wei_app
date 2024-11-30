@@ -7,6 +7,7 @@ class PageProduit extends StatelessWidget {
   final String ref;
   final String size;
   final String color;
+  final String image;
 
   const PageProduit({
     super.key,
@@ -14,7 +15,8 @@ class PageProduit extends StatelessWidget {
     required this.nameProduit,
     required this.ref,
     required this.size,
-    required this.color
+    required this.color,
+    this.image = ""
   });
 
   @override
@@ -32,10 +34,10 @@ class PageProduit extends StatelessWidget {
             height: 200,
             decoration: BoxDecoration(
               color: Colors.grey[300], // Placeholder background
-              image: const DecorationImage(
-                image: AssetImage('images/pantalon_gris.jpg'),
-                fit: BoxFit.cover,
-              ),
+              image: DecorationImage(
+                  image: AssetImage('images/$image'),
+                  fit: BoxFit.cover,
+                  )
             ),
           ),
           const SizedBox(height: 10),

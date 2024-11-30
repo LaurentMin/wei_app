@@ -56,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ref: item['ref'],
                           size: item['size'],
                           color: item['color'],
+                          image: item['image'],
                         ),
                       ),
                     );
