@@ -70,25 +70,41 @@ class PageProduit extends StatelessWidget {
           // Boutons "Trouver" et "Déposer/Déplacer"
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child: Column(
               children: [
-                ElevatedButton.icon(
-                  onPressed: () {
-                    print('Trouver appuyé');
-                    // Implémente la logique ici
-                  },
-                  icon: const Icon(Icons.search),
-                  label: const Text('Trouver'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        print('Trouver appuyé');
+                        // Implémente la logique ici
+                      },
+                      icon: const Icon(Icons.search),
+                      label: const Text('Trouver'),
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        print('Déposer/Déplacer appuyé');
+                        // Implémente la logique ici
+                      },
+                      icon: const Icon(Icons.move_to_inbox),
+                      label: const Text('Déposer/Déplacer'),
+                    ),
+                  ],
                 ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    print('Déposer/Déplacer appuyé');
-                    // Implémente la logique ici
-                  },
-                  icon: const Icon(Icons.move_to_inbox),
-                  label: const Text('Déposer/Déplacer'),
-                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        print("Ajouter une image appuyé");
+                      },
+                      icon: const Icon(Icons.add_a_photo),
+                      label: const Text("Ajouter une image"),
+                    )
+                  ]
+                )
               ],
             ),
           ),
