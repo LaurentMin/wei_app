@@ -18,11 +18,13 @@ class _UploadImagePageState extends State<UploadImagePage> {
       setState(() {
         _image = File(pickedFile.path);
       });
+      print(pickedFile.path);
     }
   }
 
   Future<void> _uploadImage() async {
     if (_image != null) {
+      print("_uploadImage");
       await ApiService.uploadImage(_image!, 2);
     } else {
       print('Aucune image sélectionnée');

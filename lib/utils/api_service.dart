@@ -31,7 +31,7 @@ class ApiService {
 
   try {
     final request = http.MultipartRequest('POST', Uri.parse(url));
-    request.fields['idProduit'] = idProduit as String;
+    request.fields['idProduit'] = idProduit.toString();
     request.files.add(await http.MultipartFile.fromPath(
       'image',
       imageFile.path,
