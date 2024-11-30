@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wei_app/pages/upload_image_page.dart';
 import '../widgets/floating_buttons.dart';
 
 class PageProduit extends StatelessWidget {
@@ -67,7 +68,7 @@ class PageProduit extends StatelessWidget {
             ),
           ),
 
-          // Boutons "Trouver" et "Déposer/Déplacer"
+          // Boutons "Trouver", "Déposer/Déplacer" et "Ajouter une image"
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
@@ -99,6 +100,12 @@ class PageProduit extends StatelessWidget {
                     ElevatedButton.icon(
                       onPressed: () {
                         print("Ajouter une image appuyé");
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(
+                            builder: (context) => UploadImagePage(),
+                          )
+                        );
                       },
                       icon: const Icon(Icons.add_a_photo),
                       label: const Text("Ajouter une image"),
