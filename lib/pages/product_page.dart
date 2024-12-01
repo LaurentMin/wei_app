@@ -91,17 +91,17 @@ class PageProduit extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Référence : $ref',
+                  'Reference : $ref',
                   style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  'Taille : $size',
+                  'Size : $size',
                   style: const TextStyle(fontSize: 14),
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  'Couleur : $color',
+                  'Colore : $color',
                   style: const TextStyle(fontSize: 14),
                 ),
                 const SizedBox(height: 20),
@@ -123,7 +123,7 @@ class PageProduit extends StatelessWidget {
                         // Implémente la logique ici
                       },
                       icon: const Icon(Icons.search),
-                      label: const Text('Trouver'),
+                      label: const Text('Find'),
                     ),
                     ElevatedButton.icon(
                       onPressed: () {
@@ -131,7 +131,7 @@ class PageProduit extends StatelessWidget {
                         // Implémente la logique ici
                       },
                       icon: const Icon(Icons.move_to_inbox),
-                      label: const Text('Déposer/Déplacer'),
+                      label: const Text('Drop off/Relocate'),
                     ),
                   ],
                 ),
@@ -149,7 +149,7 @@ class PageProduit extends StatelessWidget {
                         );
                       },
                       icon: const Icon(Icons.add_a_photo),
-                      label: const Text("Ajouter une image"),
+                      label: const Text("Add an image"),
                     )
                   ]
                 )

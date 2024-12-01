@@ -7,7 +7,7 @@ import 'scan_page.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
-  final String title = 'ARTICLES';
+  final String title = 'PRODUCTS';
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();

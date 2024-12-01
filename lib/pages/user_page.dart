@@ -8,7 +8,7 @@ class PageUtilisateur extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Page Utilisateur'),
+        title: const Text('User'),
       ),
       body: const Center(
         child: Text('Détails ou gestion utilisateur ici.'),

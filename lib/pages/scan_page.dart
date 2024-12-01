@@ -31,7 +31,7 @@ class PageScan extends StatefulWidget {
 }
 
 class _PageScanState extends State<PageScan> {
-  String scannedResult = "Aucun code scanné";  // Variable pour afficher le résultat du scan
+  String scannedResult = "No scanned code";  // Variable pour afficher le résultat du scan
 
   // Fonction qui appelle le scanner
   Future<void> scanBarcode() async {
@@ -55,7 +55,7 @@ class _PageScanState extends State<PageScan> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Scanner un Code-barres'),
+        title: Text('Barcode Scan'),
       ),
       body: Center(
         child: Column(
@@ -70,11 +70,11 @@ class _PageScanState extends State<PageScan> {
             // Le bouton qui lance le scanner
             ElevatedButton(
               onPressed: scanBarcode,
-              child: Text('Scanner un Code'),
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                 textStyle: TextStyle(fontSize: 18),
               ),
+              child: const Text('Scan a barcode'),
             ),
           ],
         ),
