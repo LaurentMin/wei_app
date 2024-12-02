@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import '../widgets/floating_buttons.dart';
 import '../utils/api_service.dart';
 import 'product_page.dart';
-import 'user_page.dart';
-import 'scan_page.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
