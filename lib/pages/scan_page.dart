@@ -9,12 +9,20 @@ class PageScan extends StatefulWidget {
 
   @override
   _PageScanState createState() => _PageScanState();
+
 }
 
 class _PageScanState extends State<PageScan> {
   String scannedResult = "No scanned code"; // Variable pour afficher le résultat du scan
   List<dynamic> item = [];
   bool isFind = false;
+  bool canShow = false;
+
+  @override
+  void initState() {
+    super.initState();
+    scanBarcode();
+  }
 
   // Fonction qui appelle le scanner
   Future<void> scanBarcode() async {
@@ -30,6 +38,7 @@ class _PageScanState extends State<PageScan> {
     if (result != '-1') {
       setState(() {
         scannedResult = result; // Met à jour le résultat scanné
+        canShow = true;
       });
 
       // Recherche de la référence en base
