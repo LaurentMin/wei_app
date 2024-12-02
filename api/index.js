@@ -102,9 +102,9 @@ app.delete('/items/:id', (req, res) => {
 
 // 5. Retrouver un item par reference
 app.get('/items/:refToFind', (req, res) => {
-  const { refToFind } = res.params;
-  const query = 'SELECT * FROM items WHEN ref = ?';
-  db.query(query, [refToFind], (err) => {
+  const { refToFind } = req.params;
+  const query = 'SELECT * FROM items WHERE ref = ?';
+  db.query(query, [refToFind], (err, result) => {
     if (err) {
     console.error(err);
     res.status(500).send('Erreur lors de la recherche de l\'élément');
