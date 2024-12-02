@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import '../widgets/floating_buttons.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import '../utils/api_service.dart';
-import 'product_page.dart'; // Importez la page produit
+import 'product_page.dart';
+import '../utils/enum.dart';
 
 class PageScan extends StatefulWidget {
-  const PageScan({super.key});
+  final ScanAction action;
+
+  const PageScan({
+    super.key, 
+    required this.action
+  });
 
   @override
   _PageScanState createState() => _PageScanState();
@@ -17,6 +23,7 @@ class _PageScanState extends State<PageScan> {
   List<dynamic> item = [];
   bool isFind = false;
   bool canShow = false;
+  ScanAction action = ScanAction.item;
 
   @override
   void initState() {
@@ -42,33 +49,42 @@ class _PageScanState extends State<PageScan> {
       });
 
       // Recherche de la référence en base
-      final data = await ApiService.fetchItemRef(result);
-      setState(() {
-        item = data ?? [];
-        isFind = item.isNotEmpty; // Détermine si un article a été trouvé
-      });
+      final data;
+      if (action == ScanAction.item) {
+        data = await ApiService.fetchItemRef(result);
 
-      // Si un article est trouvé, redirigez vers la page produit
-      if (isFind) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PageProduit(
-              idProduit: item[0]['id'],
-              nameProduit: item[0]['name'],
-              ref: item[0]['ref'],
-              size: item[0]['size'],
-              color: item[0]['color'],
-              photo: item[0]['image'],
+        setState(() {
+          item = data ?? [];
+          isFind = item.isNotEmpty; // Détermine si un article a été trouvé
+        });
+
+        // Si un article est trouvé, redirigez vers la page produit
+        if (isFind) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PageProduit(
+                idProduit: item[0]['id'],
+                nameProduit: item[0]['name'],
+                ref: item[0]['ref'],
+                size: item[0]['size'],
+                color: item[0]['color'],
+                photo: item[0]['image'],
+              ),
             ),
-          ),
-        );
-      } else {
-        // Affiche un message d'erreur si aucun article n'est trouvé
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Aucun article trouvé pour ce code.')),
-        );
+          );
+        } else {
+          // Affiche un message d'erreur si aucun article n'est trouvé
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Aucun article trouvé pour ce code.')),
+          );
+        }
+        
+      } else { //if (action == ScanAction.location) {
+        data = await ApiService.getLocation(result);
       }
+
+      
     }
   }
 

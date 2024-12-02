@@ -41,26 +41,50 @@ class ApiService {
     }
   }
 
+  static Future<bool> getLocation(String locateStr) async {
+    const String url = '$urlApi/locations/get';
+    List<String> splitted = locateStr.split('-');
+
+    try {
+      final request = http.MultipartRequest('POST', Uri.parse(url));
+      request.fields['allee'] = splitted[0];
+      request.fields['rangee'] = splitted[1];
+      request.fields['etage'] = splitted[2];
+
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        print('Existing location.');
+        return true;
+      } else {
+        print('Erreur lors de l\'envoi : ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      print('Erreur : $e');
+      return false;
+    }
+  }
+
   // Ajouter une image
   static Future<void> uploadImage(File imageFile, int idProduit) async {
   const String url = '$urlApi/upload-image';
 
-  try {
-    final request = http.MultipartRequest('POST', Uri.parse(url));
-    request.fields['idProduit'] = idProduit.toString();
-    request.files.add(await http.MultipartFile.fromPath(
-      'image',
-      imageFile.path,
-    ));
+    try {
+      final request = http.MultipartRequest('POST', Uri.parse(url));
+      request.fields['idProduit'] = idProduit.toString();
+      request.files.add(await http.MultipartFile.fromPath(
+        'image',
+        imageFile.path,
+      ));
 
-    final response = await request.send();
-    if (response.statusCode == 200) {
-      print('Image envoyée avec succès');
-    } else {
-      print('Erreur lors de l\'envoi : ${response.statusCode}');
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        print('Image envoyée avec succès');
+      } else {
+        print('Erreur lors de l\'envoi : ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Erreur : $e');
     }
-  } catch (e) {
-    print('Erreur : $e');
   }
-}
 }

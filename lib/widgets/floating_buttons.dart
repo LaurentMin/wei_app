@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../pages/user_page.dart';
 import '../pages/scan_page.dart';
 import '../pages/home_page.dart';
+import '../utils/enum.dart';
 
 class FloatingButtons extends StatelessWidget {
   const FloatingButtons({super.key});
@@ -30,7 +31,7 @@ class FloatingButtons extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const PageScan()),
+                MaterialPageRoute(builder: (context) => const PageScan(action: ScanAction.item)),
               );
             },
             child: const Icon(Icons.add_circle),
