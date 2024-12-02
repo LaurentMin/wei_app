@@ -91,7 +91,7 @@ app.get('/items', (req, res) => {
   app.delete('/items/:id', (req, res) => {
     const { id } = req.params;
     const query = 'DELETE FROM items WHERE id = ?';
-    db.query(query, [id], (err) => {if (err) {
+    db.query(query, [id], (err, result) => {if (err) {
         console.error(err);
         res.status(500).send('Erreur lors de la suppression de l\'item');
       } else {
@@ -99,8 +99,22 @@ app.get('/items', (req, res) => {
       }
     });
   });
+
+  // 5. Retrouver un item par reference
+  app.get('/items/:refToFind', (req, res) => {
+    const { refToFind } = reg.params;
+    const query = 'SELECT * FROM items WHEN ref = ?';
+    db.query(query, [refToFind], (err) => {
+      if (err) {
+      console.error(err);
+      res.status(500).send('Erreur lors de la recherche de l\'élément');
+      } else {
+      res.json(result);
+      }
+    })
+  })
   
-  // 5. Ajout de location
+  // 6. Ajout de location
   app.post('/locations', (req, res) => {
     const { allee } = req.body;
     const { rangee } = req.body;
@@ -116,7 +130,7 @@ app.get('/items', (req, res) => {
     });
   });
   
-  // 6. Lier item et location
+  // 7. Lier item et location
   app.post('/item-location', (req, res) => {
     const { iditem } = req.body;
     const { idlocation } = req.body;
@@ -131,7 +145,7 @@ app.get('/items', (req, res) => {
     });
   });
   
-  // 7. Inserer un chemin d'image
+  // 8. Inserer un chemin d'image
   app.post('/upload-image', upload.single('image'), (req, res) => {
       const { idProduit } = req.body;
       const filePath = req.file.path;
@@ -156,7 +170,7 @@ app.get('/items', (req, res) => {
   // Dossier contenant les images
   const imageDirectory = path.join(__dirname, 'images');
   
-  // 8. Recuperer une image par nom
+  // 9. Recuperer une image par chemin
   app.get('/image/:imageName', (req, res) => {
     const imageName = req.params.imageName;
     const imagePath = path.join(imageDirectory, imageName);
