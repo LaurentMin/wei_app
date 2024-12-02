@@ -111,8 +111,24 @@ app.get('/items/:refToFind', (req, res) => {
     } else {
     res.json(result);
     }
-  })
-})
+  });
+});
+
+// 6. Retrouver une location
+app.post('/locations/get', (req, res) => {
+  const { allee } = req.body;
+  const { rangee } = req.body;
+  const { etage } = req.body;
+  const query = 'SELECT id FROM locations WHERE allee = ? AND rangee = ? AND etage = ?';
+  db.query(query, [allee, rangee, etage], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Erreur lors de la recherche de location');
+    } else {
+      res.json(result);
+    }
+  });
+});
   
 // 6. Ajout de location
 app.post('/locations', (req, res) => {
