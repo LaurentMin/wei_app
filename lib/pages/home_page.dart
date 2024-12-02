@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import '../widgets/floating_buttons.dart';
 import '../utils/api_service.dart';
 import 'product_page.dart';
-import 'user_page.dart';
-import 'scan_page.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
-  final String title = 'ARTICLES';
+  final String title = 'PRODUCTS';
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -56,6 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ref: item['ref'],
                           size: item['size'],
                           color: item['color'],
+                          photo: item['image'],
                         ),
                       ),
                     );

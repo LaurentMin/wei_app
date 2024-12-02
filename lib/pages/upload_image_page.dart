@@ -18,11 +18,13 @@ class _UploadImagePageState extends State<UploadImagePage> {
       setState(() {
         _image = File(pickedFile.path);
       });
+      print(pickedFile.path);
     }
   }
 
   Future<void> _uploadImage() async {
     if (_image != null) {
+      print("_uploadImage");
       await ApiService.uploadImage(_image!, 2);
     } else {
       print('Aucune image sélectionnée');
@@ -32,7 +34,7 @@ class _UploadImagePageState extends State<UploadImagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Uploader une image')),
+      appBar: AppBar(title: const Text('Upload an image')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -43,12 +45,12 @@ class _UploadImagePageState extends State<UploadImagePage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _pickImage,
-              child: const Text('Sélectionner une image'),
+              child: const Text('Select an image'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _uploadImage,
-              child: const Text('Uploader l\'image'),
+              child: const Text('Upload'),
             ),
           ],
         ),
