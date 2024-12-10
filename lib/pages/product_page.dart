@@ -4,6 +4,8 @@ import '../widgets/floating_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 
 // ignore: must_be_immutable
@@ -28,36 +30,57 @@ class PageProduit extends StatelessWidget {
   });
 
   Future<bool> getImage(String imageName) async {
-  const String apiUrl = "https://api.skeuly.com/image";
-  try {
-    // Essaie de charger l'image
-    await rootBundle.load('images/$imageName');
-    isExist = true;
-    return true;
-  } catch (e) {
-    // Si l'image n'existe pas, une exception sera levée
-    print('Image non trouvée localement, tentative de téléchargement...');
+    const String apiUrl = "https://api.skeuly.com/image";
+    try {
+      // Essaie de charger l'image
+      await rootBundle.load('images/$imageName');
+      isExist = true;
+      return true;
+    } catch (e) {
+      // Si l'image n'existe pas, une exception sera levée
+      print('Image non trouvée localement, tentative de téléchargement...');
+    }
+
+    // Si l'image n'est pas dans les assets, la télécharger depuis le serveur
+    try {
+      print('$apiUrl/$imageName');
+      final response = await http.get(Uri.parse('$apiUrl/$imageName'));
+      if (response.statusCode == 200) {
+        // Sauvegarder l'image localement dans le répertoire des fichiers temporaires
+        const String directory = "../../images";
+        final filePath = '$directory/$imageName';
+        final file = File(filePath);
+        await file.writeAsBytes(response.bodyBytes);
+        print('Image téléchargée et enregistrée localement : $filePath');
+        return true;
+      } else {
+        print('Erreur lors du téléchargement de l\'image : ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Erreur de connexion au serveur : $e');
+    }
+    return false; // Retourne null si le téléchargement échoue
   }
 
-  // Si l'image n'est pas dans les assets, la télécharger depuis le serveur
-  try {
-    print('$apiUrl/$imageName');
-    final response = await http.get(Uri.parse('$apiUrl/$imageName'));
-    if (response.statusCode == 200) {
-      // Sauvegarder l'image localement dans le répertoire des fichiers temporaires
-      const String directory = "../../images";
-      final filePath = '$directory/$imageName';
-      final file = File(filePath);
-      await file.writeAsBytes(response.bodyBytes);
-      print('Image téléchargée et enregistrée localement : $filePath');
-      return true;
-    } else {
-      print('Erreur lors du téléchargement de l\'image : ${response.statusCode}');
-    }
-  } catch (e) {
-    print('Erreur de connexion au serveur : $e');
-  }
-  return false; // Retourne null si le téléchargement échoue
+  Future<Map<String, dynamic>> postRequest(int value) async {
+  var url = Uri.parse('https://io.adafruit.com/api/v2/vivic13/feeds/action/data');
+  var body = jsonEncode({
+    'value': value.toString(),
+  });
+
+  print('Body: $body');
+
+  var response = await http.post(
+    url,
+    headers: {
+      'accept': 'application/json',
+      'Content-Type': 'application/json-patch+json',
+      'X-AIO-Key': 'aio_yMOR488HJjYjup53pUB3ldrS4b5o'
+    },
+    body: body,
+  );
+
+  return jsonDecode(response.body);
 }
 
   @override
@@ -119,8 +142,8 @@ class PageProduit extends StatelessWidget {
                   children: [
                     ElevatedButton.icon(
                       onPressed: () {
-                        print('Trouver appuyé');
-                        // Implémente la logique ici
+                        print('Find appuyé');
+                        postRequest(5);
                       },
                       icon: const Icon(Icons.search),
                       label: const Text('Find'),
